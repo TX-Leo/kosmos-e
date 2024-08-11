@@ -6,4 +6,4 @@
  * @File: 
  * @Brief: 
 -->
-# Webpage for KOSMOS-E : Learning to Follow Instruction for Robotic Grasping(https://tx-leo.github.io/kosmos-e/)
+# Webpage for KOSMOS-E : Learning to Follow Instruction for Robotic Grasping
