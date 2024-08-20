@@ -1,0 +1,24 @@
+Want LLM for Robotics Manipulation Tasks?
+
+We present KOSMOS-E (accepted into IROS2024), a Multimodal Large Language Model (MLLM) that leverages instruction-following robotic grasping data to enhance capabilities for precise and intricate robotic grasping maneuvers.
+
+:https://tx-leo.github.io/KOSMOS-E/
+:https://github.com/TX-Leo/KOSMOS-E
+:arxiv
+
+Method
+
+Dataset:
+We create INSTRUCT-GRASP dataset based on Cornell Grasping Dataset. It includes three components: Non, Single and Multi with 8 kinds of intructions. It has 1.8 million grasping samples, with 250k unique language-image non-instruction samples and 1.56 million instruction-following samples. Among these instruction-following samples, 654k pertain to the single-object scene, while the remaining 654k relate to the multi-object scene.
+
+Evaluation
+1. Non-Instruction Grasping
+We follow a cross-validation setup as in previous works and partition the datasets into 5 folds
+
+2. Instruction-following Grasping
+Our model was trained using a combination of non-instruction and instruction-following datasets. In contrast, four other baselines were each trained on a distinct dataset: non-instruction, single-object, multi-object, and a combination of single-object and multi-object datasets. We adopted image-wise grasp accuracy as our primary evaluation metric.
+
+
+Instruction-following Grasping Examples
+
+This is a work I produced during my internship at Microsoft Research, which is also my first academic work in Robotics. Thanks a lot for the help of my mentor and co-author.
