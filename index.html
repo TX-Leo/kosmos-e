@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="KOSMOS-E : Learning to Follow Instruction for Robotic Grasping">
+  <meta name="keywords" content="Robotics, Quadruped, Whole-body Control, Whole-body Manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    KOSMOS-E : Learning to Follow Instruction for Robotic Grasping
+  </title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZ38WT2YPD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-QZ38WT2YPD');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+  <div class="hero-video" style="height: 100%; width: 177.77777778vh; min-width: 100%;min-height: 56.25vw;">
+    <video playsinline autoplay muted loop>
+      <source src=" ./static/videos/kosmos-e-video.mp4" type="video/mp4">
+    </video>
+    <!-- <img src="./static/images/pipeline.png" alt="espresso-and-latte" style="width: 120%;" class="image"> -->
+  </div>
+  <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+    style="height: 154.28571428vw; width: 100%; min-width:64.81481481vh;min-height:100%;">
+    <video playsinline autoplay muted loop>
+      <source src="./static/videos/kosmos-e-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="overlay"></div>
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head is-hidden-mobile">
+    <header class="navbar">
+      <div class="container is-size-5">
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item pl-4 pr-4" href="https://tx-leo.github.io/data/IROS2024_KOSMOS-E.pdf">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+            <a class="navbar-item  pl-4 pr-4" href="https://arxiv.org/abs/">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span> 
+            </a>
+            <a href="https://www.youtube.com/watch?v=ZUHpsCZ5nXc" class="navbar-item  pl-4 pr-4">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span> 
+            </a>
+            <span class="navbar-item  pl-4 pr-4">
+              <a href="https://github.com/TX-Leo/KOSMOS-E" class="button is-inverted is-large">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 12rem;">
+        KOSMOS-E
+      </h1>
+      <h1 class="subtitle is-1 publication-title is-size-4-mobile" style="font-size: 4rem;">
+        Learning to Follow Instruction <br class="is-hidden-mobile">for Robotic Grasping
+      </h1>
+      <h1 class="is-2 is-italic is-size-4-mobile" style="font-size: 2rem; opacity: 80%;">
+        <strong>
+            <a href="https://tx-leo.github.io/">Zhi Wang</a><sup>* 1,2</sup>, &nbsp;&nbsp;
+            <a href="https://yushuiwx.github.io">Xun Wu</a><sup>* 1,2</sup>, &nbsp;&nbsp;
+            <a href="https://buaahsh.github.io/">Shaohan Huang</a><sup>1</sup>, &nbsp;&nbsp;
+            <br>
+            <a href="https://dong.li/">Li Dong</a><sup>1</sup>, &nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/wenhui-wang-064411121/?originalSubdomain=cn/">Wenhui Wang</a><sup>1</sup>, &nbsp;&nbsp;
+            <a href="https://www.microsoft.com/en-us/research/people/shumma/">Shuming Ma</a><sup>1</sup>, &nbsp;&nbsp;
+            <a href="https://thegenerality.com/">Furu We</a><sup>1</sup>, &nbsp;&nbsp;
+            <br>
+            <br>
+            <sup>1</sup>Microsoft Research, <sup>2</sup>Tsinghua University
+        </strong>
+      </h1>
+      <br>
+      <br>
+      <h1 class="is-2 is-italic is-size-4-mobile" style="font-size: 2rem; opacity: 80%;">
+        IEEE International Conference on Intelligent Robots and System (IROS), 2024.
+      </h1>
+      <div class="column has-text-centered is-hidden-tablet">
+        <div class="publication-links">
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="https://tx-leo.github.io/data/IROS2024_KOSMOS-E.pdf" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <!-- arXiv Link. -->
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span>
+            </a>
+          </span>
+          <!-- Video Link. -->
+          <span class="link-block">
+            <a href="https://www.youtube.com/watch?v=ZUHpsCZ5nXc" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span>
+            </a>
+          </span>
+          <!-- Code Link. -->
+          <span class="link-block">
+            <a href="https://github.com/TX-Leo/KOSMOS-E"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot is-hidden-mobile">
+    <nav class="tabs is-boxed is-fullwidth is-size-5">
+      <ul>
+        <li><a href="#Overview">Overview</a></li>
+        <li><a href="#Method">Method</a></li>
+        <li><a href="#Dataset: INSTRUCT-GRASP">Dataset: INSTRUCT-GRASP</a></li>
+        <li><a href="#Architecture">Architecture</a></li>
+        <li><a href="#Evaluation Results">Evaluation Results</a></li>
+        <li><a href="#Other Results">Other Results</a></li>
+        <li><a href="#Case Study">Case Study</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+
+<section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://tx-leo.github.io/data/IROS2024_KOSMOS-E.pdf"
+                     class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- arXiv Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/"
+                     class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>ArXiv</span>
+                  </a>
+                </span>
+                <!-- Twitter Link. -->
+                <span class="link-block">
+                  <a href="https://x.com/"
+                     class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                    </span>
+                    <span>Summary</span>
+                  </a>
+                </span>
+                <!-- Github Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/TX-Leo/KOSMOS-E"
+                     class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Github</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=ZUHpsCZ5nXc"
+                     class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span>
+              </div>
+              
+              <br>
+              <br>
+              <div class="logos-container"> <!--- New container for logos --->
+                <img src="./static/images/microsoft-logo-png-transparent.png" style="width: 30%; margin: 5px;">
+                <img src="./static/images/thu-logo-png-transparent.png"style="width: 20%; margin: 5px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="section" id="Overview">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-4-mobile">Overview</h2>
+    <p>
+        Tuning on instruction-following data has been shown to enhance the capabilities and controllability of language models, but the idea is less explored in the robotic field. In this work, we introduce KOSMOS-E, a Multimodal Large Language Model (MLLM) that leverages instruction-following robotic grasping data to enhance capabilities for precise and intricate robotic grasping maneuvers. To achieve this, we craft a large-scale instruction-following robotic grasping dataset, termed INSTRUCT-GRASP, primarily comprising two aspects: (i) grasp a single object following varying levels of granularity descriptions, e.g., different angles and aspects, and (ii) grasp a specific object within a multi-object environment following specific attributes, e.g., color and shape. Extensive experiments show the effectiveness of KOSMOS-E on robotic grasping tasks across a variety of environments.
+    </p>
+    <iframe width="100%" style="aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/ZUHpsCZ5nXc" title="Overview"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</section>
+
+  <section class="section is-small" id="Method">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+  
+          <h2 class="title is-1 has-text-centered is-size-4-mobile">Method</h2>
+            <div class="content">
+                <p>
+                    KOSMOS-E is a multimodal large language model that has new capabilities of robotic grasping, which can understand multimodal input and follow different instructions to generate a numerical grasp pose prediction (grasp center point [x, y] and rotation angle θ), guiding the robot to accurately grasp in both single object and multi-object scenes.
+                </p>
+                <img src="./static/images/pipeline.png" alt="espresso-and-latte" style="width: 120%;" class="image">
+            </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-small" id="Dataset: INSTRUCT-GRASP">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+  
+          <h2 class="title is-1 has-text-centered is-size-4-mobile">Dataset: INSTRUCT-GRASP</h2>
+            <div class="content">
+                <p>
+                    We create INSTRUCT-GRASP dataset based on Cornell Grasping Dataset. It includes three components: Non, Single and Multi with 8 kinds of intructions. It has 1.8 million grasping samples, with 250k unique language-image non-instruction samples and 1.56 million instruction-following samples. Among these instruction-following samples, 654k pertain to the single-object scene, while the remaining 654k relate to the multi-object scene.
+                </p>
+                <img src="./static/images/construction.png" alt="espresso-and-latte" style="width: 120%;" class="image">
+            </div>
+  
+            <div class="content">
+                <p>
+                    - <strong>Purpose:</strong> Existing datasets don't have instructions, they only focus on visual info.
+                    <br>
+                    - <strong>Total Size: </strong> Non-Instruction: 250k; Instruction-Following: 1.56M (654k for single-object, 654k for multi-object)
+                    <br>
+                    - <strong>Variety: </strong> Name, Shape, Color, Purpose, Position, Angle, Part, Strategy</p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-small" id="Architecture">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+  
+          <h2 class="title is-1 has-text-centered is-size-4-mobile">Architecture</h2>
+            <div class="content">
+                <p>
+                    KOSMOS-E's architecture.
+                </p>
+                <img src="./static/images/architecture.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+<!-- Evaluation Section. -->
+<section class="section" id="Evaluation Results">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Evaluation Results</h2>
+        <h3 class="title is-3">1. Non-Instruction Grasping</h3>
+        
+        <p>We follow a cross-validation setup as in previous works and partition the datasets into 5 folds</p>
+        <br>
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Modality</th>
+                  <th>IW</th>
+                  <th>OW</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GR-ConvNet</td>
+                  <td>RGBD</td>
+                  <td>97.70</td>
+                  <td>96.60</td>
+                </tr>
+                <tr>
+                  <td>GG-CNN2</td>
+                  <td>RGBD</td>
+                  <td>84</td>
+                  <td>82</td>
+                </tr>
+                <tr>
+                  <td>RT-Grasp(Numbers Only)</td>
+                  <td>RGB+text</td>
+                  <td>58.44±6.04</td>
+                  <td>50.31±14.34</td>
+                </tr>
+                <tr>
+                  <td>RT-Grasp(With Prompts)</td>
+                  <td>RGB+text</td>
+                  <td>69.15±11.00</td>
+                  <td>67.44±9.99</td>
+                </tr>
+                <tr>
+                  <td>KOSMOS-E</td>
+                  <td>RGB+text</td>
+                  <td><strong>85.19±0.27</strong></td>
+                  <td><strong>72.63±4.91</strong></td> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <style>
+          .table-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+          }
+          </style>
+
+        <br>
+        <h3 class="title is-3">2. Instruction-following Grasping</h3>
+        <p>Our model was trained using a combination of non-instruction and instruction-following datasets. In contrast, four other baselines were each trained on a distinct dataset: non-instruction, single-object, multi-object, and a combination of single-object and multi-object datasets. We adopted image-wise grasp accuracy as our primary evaluation metric.</p>
+        <br>
+        
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable">
+            <thead>
+                <tr>
+                <th rowspan="2">Model</th>
+                <th colspan="2">Single Object</th>
+                <th colspan="6">Multi Object</th>
+                </tr>
+                <tr>
+                <th>angle</th>
+                <th>part</th>
+                <th>name</th>
+                <th>color</th>
+                <th>shape</th>
+                <th>purpose</th>
+                <th>position</th>
+                <th>strategy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>KOSMOS-E</td>
+                <td>77.98</td>
+                <td>82.35</td>
+                <td>31.43</td>
+                <td>29.56</td>
+                <td>29.49</td>
+                <td>27.93</td>
+                <td>30.44</td>
+                <td>36.16</td>
+                </tr>
+                <tr>
+                <td>Non</td>
+                <td>79.16</td>
+                <td>76.80</td>
+                <td>0.42</td>
+                <td>4.80</td>
+                <td>1.48</td>
+                <td>0.42</td>
+                <td>7.34</td>
+                <td>2.47</td>
+                </tr>
+                <tr>
+                <td>Single</td>
+                <td>78.27</td>
+                <td>80.28</td>
+                <td>0.49</td>
+                <td>0.35</td>
+                <td>0.35</td>
+                <td>0.46</td>
+                <td>0.35</td>
+                <td>0.85</td>
+                </tr>
+                <tr>
+                <td>Multi</td>
+                <td>7.49</td>
+                <td>8.20</td>
+                <td>25.99</td>
+                <td>25.32</td>
+                <td>24.82</td>
+                <td>23.87</td>
+                <td>25.14</td>
+                <td>27.22</td>
+                </tr>
+                <tr>
+                <td>Single+Multi</td>
+                <td>78.02</td>
+                <td>80.92</td>
+                <td>30.23</td>
+                <td>30.12</td>
+                <td>28.46</td>
+                <td>27.23</td>
+                <td>29.69</td>
+                <td>33.58</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        
+        <style>
+        .table-container {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        }
+        </style>
+  
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section is-small" id="Other Results">
+    <div class="container">
+      <h2 class="title is-1 has-text-centered is-size-4-mobile">Other Results</h2>
+  
+      <div class="columns">
+        <div class="column is-one-fourth"> 
+            <h3 class="title is-2 has-text-centered is-size-4-mobile">Impact of different training data format</h3>
+            <img src="./static/images/training_format.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+            
+        </div>
+  
+        <div class="column is-two-fourths">
+            <h3 class="title is-2 has-text-centered is-size-4-mobile">Different training strategy</h3>
+            <img src="./static/images/training_strategy.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+        </div>
+  
+        <div class="column is-three-fourths">
+            <h3 class="title is-2 has-text-centered is-size-4-mobile">Training Data Size</h3>
+            <img src="./static/images/tranining_size.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+        </div>
+      </div>
+      
+      <div class="columns">
+        <div class="column is-half"> 
+            <h3 class="title is-2 has-text-centered is-size-4-mobile">Different grasp representations</h3>
+            <img src="./static/images/grasp_representations.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+            
+        </div>
+  
+        <div class="column is-half">
+            <h3 class="title is-2 has-text-centered is-size-4-mobile">Comparison of different grasp representations</h3>
+            <img src="./static/images/grasp_representations_result.png" alt="espresso-and-latte" style="width: 80%;" class="image">
+        </div>
+      </div>
+  
+    </div>
+  </section>
+
+  <section class="section is-small" id="Case Study">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+  
+          <h2 class="title is-1 has-text-centered is-size-4-mobile">Instruction-following Grasping Examples</h2>
+            <div class="content">
+                <p>
+                    - Single-Object Scene
+                    <br>
+                    - Multi-Object Scene
+                    <br>
+                    - Eight Different Instructions
+                    <br>
+                </p>
+                <img src="./static/images/case.png" alt="espresso-and-latte" style="width: 100%;" class="image">
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- =================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website template modified from <a href="https://umi-on-legs.github.io//">UMI-On-Legs</a>,
+            <a href="https://nerfies.github.io/">NeRFies</a> and <a
+              href="https://www.cs.columbia.edu/~huy/scalingup/">Scaling Up Distilling Down</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow and modify the <a
+              href="https://github.com/nerfies/nerfies.github.io">source
+              code</a> of this website as long as
+            you link back to the <a href="https://nerfies.github.io/">KOSMOS-E</a> page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
